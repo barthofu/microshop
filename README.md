@@ -18,6 +18,13 @@ You **must execute this command** to push the images directly to the in-cluster 
 eval $(minikube docker-env)
 ```
 
+You **also must execute this commands** that would be useful for our load balancers to work
+
+```sh
+minikube tunnel
+```
+
+
 > [!NOTE]
 > A `Makefile` is provided to simplify the usage of the project.
 > You can run `make help` to see all available commands.
