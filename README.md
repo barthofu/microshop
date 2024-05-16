@@ -2,4 +2,33 @@
 
 > By **Bartholomé GILI** & **Bastien BOMBARDELLA**.
 
-Here's our evaluation project for the course "Software & Cloud". It is a docker and kubernetes oriented project. You can find the subject [here](./docs/Évaluation%20finale%20-%20sujet.pdf).
+By **Bartholomé GILI** & **Bastien BOMBARDELLA**
+
+## Requirements
+
+- [Docker](https://www.docker.com/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [Helm](https://helm.sh/)
+
+## Usage
+
+You **must execute this command** to push the images directly to the in-cluster Docker daemon (docker-env)
+
+```sh
+eval $(minikube docker-env)
+```
+
+> [!NOTE]
+> A `Makefile` is provided to simplify the usage of the project.
+> You can run `make help` to see all available commands.
+> And run `make` to deploy the whole thing.
+
+1. Build the docker images
+    ```bash
+    cd services/<service_name>
+    docker build -t <service_name>-service:1.0.0 .
+    ```
+2. Deploy the services using helm
+    ```bash
+    helm upgrade <app_name> kubernetes -f kubernetes/values.yaml --force --install --namespace <app_name> --create-namespace
+    ```

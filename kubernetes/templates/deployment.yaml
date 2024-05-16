@@ -1,0 +1,49 @@
+{{ range .Values.apps -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}-deployment
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+      - name: {{ .name }}
+        image: "{{ .image }}:{{$.Chart.AppVersion}}"
+        ports:
+        - name: 'http'
+          containerPort: {{ $.Values.port }}
+          protocol: TCP
+
+        imagePullPolicy: Never 
+        livenessProbe:
+          {{- toYaml $.Values.livenessProbe | nindent 12 }}
+        readinessProbe:
+          {{- toYaml $.Values.readinessProbe | nindent 12 }}
+        resources:
+          {{- toYaml $.Values.resources | nindent 12 }}
+        env:
+          {{- tpl (toYaml $.Values.env) . | nindent 12}}
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+      - name: {{ .name }}-logs
+        image: busybox
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+        command: ["sh", "-c", "tail -n+1 -F /var/log/{{ .name }}-service.log"]
+      volumes:
+      - name: logs
+        emptyDir: {} 
+{{ end -}}

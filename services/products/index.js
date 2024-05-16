@@ -1,9 +1,18 @@
 import Fastify from 'fastify'
+import process from 'node:process'
+
 const fastify = Fastify({
-	logger: true
+	logger: {
+		level: 'info',
+		file: '/var/log/products-service.log'
+	}
 })
 
 fastify.get('/', async function handler(request, reply) {
+	
+	const apiKey = process.env['API_KEY']
+	console.log('Api key is:', apiKey)
+	
 	return 'Hello world from Products-Service'
 })
 
