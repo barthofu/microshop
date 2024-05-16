@@ -1,17 +1,33 @@
-# Utiliser une image Python officielle en tant que base
-FROM python:3.9-alpine
+# ==================
+# == dependencies ==
+# ==================
 
-WORKDIR /app
+FROM python:3.9-alpine AS dependencies-stage
 
-# Copier les fichiers requis dans le répertoire de travail de l'image
-COPY requirements.txt /app
-COPY app.py /app
+    WORKDIR /app
 
-# Installer les dépendances de l'application
-RUN pip install --no-cache-dir -r requirements.txt
+    # Copy app dependencies requirements
+    COPY requirements.txt ./
 
-# Exposer le port sur lequel l'application écoute
-EXPOSE 8080
+    # Install app dependencies
+    RUN pip install --no-cache-dir -r requirements.txt
 
-# Commande pour démarrer l'application lorsque le conteneur démarre
-CMD ["python", "app.py"]
+# ==================
+# ==== runner ======
+# ==================
+
+FROM python:3.9-alpine AS runner-stage
+
+    WORKDIR /app
+
+    # Copy app dependencies from previous stage
+    COPY --from=dependencies-stage /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+
+    # Bundle app source
+    COPY . .
+
+    # Expose the port the app runs in
+    EXPOSE 8080
+
+    # Start the app
+    CMD ["python", "app.py"]
