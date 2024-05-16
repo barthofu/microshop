@@ -7,8 +7,7 @@ FROM node:20-alpine AS dependencies-stage
     WORKDIR /app
 
     # Copy app dependencies requirements
-    COPY package.json .
-    COPY package-lock.json .
+    COPY package.json package-lock.json ./
 
     # Install app dependencies
     RUN npm install
