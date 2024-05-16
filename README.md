@@ -18,7 +18,7 @@ You **must execute this command** to push the images directly to the in-cluster 
 eval $(minikube docker-env)
 ```
 
-You **also must execute this commands** that would be useful for our load balancers to work
+You **also must execute this command** that would be useful for our load balancers to work
 
 ```sh
 minikube tunnel
