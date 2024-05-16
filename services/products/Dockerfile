@@ -16,7 +16,6 @@ FROM node:20-alpine AS dependencies-stage
 # ==== runner ======
 # ==================
 
-# Path: apps/nodejs/Dockerfile
 FROM node:20-alpine AS runner-stage
 
     WORKDIR /app
