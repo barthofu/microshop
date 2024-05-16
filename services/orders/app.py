@@ -10,7 +10,7 @@ def order_service():
     api_key = environ.get('API_KEY')
 
     app.logger.info('Accès à la page d\'accueil')
-    app.logger.ingo(f'Api key is: {api_key}')
+    app.logger.info(f'Api key is: {api_key}')
     
     print('Api key is: ', api_key)
 
