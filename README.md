@@ -2,8 +2,6 @@
 
 > By **Bartholomé GILI** & **Bastien BOMBARDELLA**.
 
-By **Bartholomé GILI** & **Bastien BOMBARDELLA**
-
 ## Requirements
 
 - [Docker](https://www.docker.com/)
