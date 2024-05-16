@@ -4,11 +4,14 @@ const fastify = Fastify({
 })
 
 fastify.get('/', async function handler (request, reply) {
-  return { hello: 'world' }
+  return 'Hello world!'
 })
 
 try {
-  await fastify.listen({ port: 3000 })
+  await fastify.listen({ 
+    host: '0.0.0.0',
+    port: 8080 
+  })
 } catch (err) {
   fastify.log.error(err)
   process.exit(1)
